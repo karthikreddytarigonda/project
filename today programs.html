@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //clouser
+        function greet() {
+            let name = "Karthik";
+
+            function sayHello() {
+                console.log("Hello " + name);
+            }
+
+            return sayHello;
+        }
+
+        const fn = greet();
+        fn();
+        //hoisting
+        console.log(a);
+        var a = 10;
+        //let var and const
+        console.log(d);
+        console.log(b);
+        console.log(c);
+
+        var d = 1;
+        let b = 2;
+        const c = 3;
+
+
+
+
+        //currying function
+        function add(a, b, c) {
+            return a + b + c;
+        }
+
+        console.log(add(1, 2, 3));
+        //currying with arrow functions
+        const addition = a => b => c => a + b + c;
+
+        console.log(addition(10)(20)(30));
+
+ </script>
+
+</body>
+
+</html>

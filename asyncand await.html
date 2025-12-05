@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>about async and await</h1>
+    <script>
+        async function showData(){
+            console.log("start");
+            let msg=await new Promise((resolve)=>{
+                setTimeout(() => resolve("data loaded"),
+                2000);
+                } );
+                console.log(msg);
+                console.log("end");
+                
+                
+            }showData();
+    </script>
+</body>
+</html>
