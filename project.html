@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Shopping Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .cart {
+            width: 30%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            height: 90vh;
+            overflow-y: auto;
+            position: sticky;
+            top: 10px;
+        }
+        .cart h2 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .cart ul {
+            list-style: none;
+        }
+        .cart li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .products {
+            width: 68%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .product {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .product img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .product button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            background: #2980b9;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .product button:hover {
+            background: #1f6691;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center; margin-bottom:20px;">Shopping Website</h1>
+    <div class="container">
+        <div class="cart">
+            <h2>Your Cart</h2>
+            <ul id="cartList"></ul>
+            <h3>Total: ₹<span id="total">0</span></h3>
+        </div>
+        <div class="products">
+            <div class="product">
+                <img src="/images/shirt.jpg" alt="product" />
+                <h3>Shirt</h3>
+                <p>₹500</p>
+                <button onclick="addToCart('Shirt', 500)">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="/images/pant.jpg" alt="Product" />
+                <h3>Pants</h3>
+                <p>₹800</p>
+                <button onclick="addToCart('Pants', 800)">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="/images/nike1.jpg" alt="Product" />
+                <h3>Shoes</h3>
+                <p>₹1500</p>
+                <button onclick="addToCart('Shoes', 1500)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    let cart = [];
+    function addToCart(name, price) {
+        let existing = cart.find(item => item.name === name);
+        if (existing) {
+            existing.quantity += 1;
+            existing.total = existing.quantity * existing.price;
+        } else {
+            cart.push({ 
+                name, 
+                price, 
+                quantity: 1, 
+                total: price 
+            });
+        }
+        displayCart();
+    }
+    function increaseQty(index) {
+        cart[index].quantity++;
+        cart[index].total = cart[index].quantity * cart[index].price;
+        displayCart();
+    }
+    function decreaseQty(index) {
+        if (cart[index].quantity > 1) {
+            cart[index].quantity--;
+            cart[index].total = cart[index].quantity * cart[index].price;
+        } else {
+            cart.splice(index, 1); 
+        }
+        displayCart();
+    }
+    function displayCart() {
+        const cartList = document.getElementById("cartList");
+        const total = document.getElementById("total");
+        cartList.innerHTML = "";
+        let grandTotal = 0;
+        cart.forEach((item, index) => {
+            grandTotal += item.total;
+            let li = document.createElement("li");
+            li.innerHTML = `
+                ${item.name} (₹${item.price})<br>
+                Quantity: 
+                <button onclick="decreaseQty(${index})" style="padding:2px 6px; margin:0 5px;">-</button>
+                ${item.quantity}
+                <button onclick="increaseQty(${index})" style="padding:2px 6px; margin-left:5px;">+</button>
+                <span style="float:right;">₹${item.total}</span>
+            `;
+            cartList.appendChild(li);
+        });
+        total.textContent = grandTotal;
+    }
+    </script>
+</body>
+</html>
